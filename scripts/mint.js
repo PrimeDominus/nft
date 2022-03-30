@@ -30,7 +30,7 @@ task("token-uri", "Fetches the token metadata for the given token ID")
         const response = await contract.tokenURI(taskArguments.tokenId, {
             gasLimit: 500_000,
         });
-        // console.log(taskArguments.tokenId);
+        console.log(response);
 
         const metadata_url = response;
         console.log(`Metadata URL: ${metadata_url}`);

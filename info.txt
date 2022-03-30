@@ -1,5 +1,5 @@
 root CID: bafybeifoyrhqj6bthhe3yfwq7ubdquen5tim6lvbmqv4fd2hnnn2k5dk54
 output: images.car
 
-root CID: bafybeigfcoz2n7kjimjngelsy3bjpql5vkapi4ivin3o2yqx4rnc66ekvm
+root CID: bafybeibdro4ulbbilaff5pdlhr4jzwhew2xfdgkqwpo7ximlk5dj25cn2m
 output: metadata.car
