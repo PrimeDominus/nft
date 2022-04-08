@@ -1,0 +1,30 @@
+{
+  "name": "nft",
+  "version": "1.0.0",
+  "description": "NFT",
+  "main": "index.js",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.5.0",
+    "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "@nomiclabs/hardhat-etherscan": "^3.0.3",
+    "ethers": "^5.6.2",
+    "hardhat": "^2.9.3",
+    "node-fetch": "^2.6.7"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://sumitpaultechnoexponent@github.com/PrimeDominus/nft.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PrimeDominus/nft/issues"
+  },
+  "homepage": "https://github.com/PrimeDominus/nft#readme"
+}
