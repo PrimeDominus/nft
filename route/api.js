@@ -2,7 +2,7 @@ const api = require('express').Router();
 const { auth } = require('../middleware/auth')
 
 //controllers
-const testCont = require('../controller/api/test')
+const SetupCont = require('../controller/api/setupController')
 
 
 module.exports = (app) => {
@@ -12,5 +12,5 @@ module.exports = (app) => {
         res.send('Invalid endpoint!')
     })
 
-    api.get('/test', testCont.test)
+    api.post('/setup/create-setup', SetupCont.createNFTStructure)
 }
