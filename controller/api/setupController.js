@@ -3,10 +3,11 @@ const router = express.Router();
 const { auth } = require('../../middleware/auth');
 const config = require('../../config/index')
 const { success, error422, error501 } = require('../../function/response');
+const { getLTSVersion } = require('../../function/common');
 const { Validator } = require('node-input-validator');
 const fs = require("fs");
 var appRoot = require('app-root-path');
-
+const packageJson = require('package-json');
 
 /**
  * @description create base structure for nft, it will create all necessary files and folder for deploy and NFT token
@@ -66,31 +67,13 @@ exports.createNFTStructure = async (req, res) => {
             var result = data.replace("{{{NETWORK}}}" , config.NETWORK);
             let hardhatConfigFile = mainDir + "/hardhat.config.js";
 
-            fs.writeFile(hardhatConfigFile, result, 'utf8', function (err) {
-                if (err) return console.log(err);
+            fs.writeFile(hardhatConfigFile, result, 'utf8', function (err1) {
+                if (err1) return console.log(err1);
             });
         });
     } catch (e) {
         error501(res);
         console.log(e)
-        return false;
-    }
-
-    //create package json file
-    try {
-        let samplePackageJsonFile = require(appRoot + "/sample_files/package.json");
-
-        samplePackageJsonFile.name = req.body.project_name;
-        samplePackageJsonFile.description = req.body.project_description ? req.body.project_description : "NFT Creation";
-        samplePackageJsonFile.author = req.body.author ? req.body.author : "";
-
-        let packageJsonFile = mainDir + "/package.json";
-        fs.writeFile(packageJsonFile, JSON.stringify(samplePackageJsonFile), 'utf8', function (err) {
-            if (err) return console.log(err);
-        });
-    } catch (e) {
-        error501(res);
-        console.log(e);
         return false;
     }
 
@@ -185,6 +168,47 @@ exports.createNFTStructure = async (req, res) => {
     } catch (e) {
         error501(res);
         console.log(e)
+        return false;
+    }
+
+    //create package json file
+    try {
+        let samplePackageJsonFile = require(appRoot + "/sample_files/package.json");
+
+        samplePackageJsonFile.name = req.body.project_name;
+        samplePackageJsonFile.description = req.body.project_description ? req.body.project_description : "NFT Creation";
+        samplePackageJsonFile.author = req.body.author ? req.body.author : "";
+        
+        //select latest version for package.json file
+        let openzeppelinVersion = await getLTSVersion("@openzeppelin/contracts");
+        samplePackageJsonFile["dependencies"]["@openzeppelin/contracts"] = "^" + openzeppelinVersion.version
+
+        let dotenvVersion = await getLTSVersion("dotenv")
+        samplePackageJsonFile["dependencies"]["dotenv"] = "^" + dotenvVersion.version
+
+        let hardhatEtherVersion = await getLTSVersion("@nomiclabs/hardhat-ethers")
+        samplePackageJsonFile["devDependencies"]["@nomiclabs/hardhat-ethers"] = "^" + hardhatEtherVersion.version
+
+        let hardhatEtherScanVersion = await getLTSVersion("@nomiclabs/hardhat-etherscan")
+        samplePackageJsonFile["devDependencies"]["@nomiclabs/hardhat-etherscan"] = "^" + hardhatEtherScanVersion.version
+
+        let ethersVersion = await getLTSVersion("ethers")
+        samplePackageJsonFile["devDependencies"]["ethers"] = "^" + ethersVersion.version
+
+        let hardhatVersion = await getLTSVersion("hardhat")
+        samplePackageJsonFile["devDependencies"]["hardhat"] = "^" + hardhatVersion.version
+
+        let nodeFetchVersion = await getLTSVersion("node-fetch")
+        samplePackageJsonFile["devDependencies"]["node-fetch"] = "^" + nodeFetchVersion.version
+
+        // console.log(samplePackageJsonFile);
+        let packageJsonFile = mainDir + "/package.json";
+        fs.writeFile(packageJsonFile, JSON.stringify(samplePackageJsonFile), 'utf8', function (err) {
+            if (err) return console.log(err);
+        });
+    } catch (e) {
+        error501(res);
+        console.log(e);
         return false;
     }
 
