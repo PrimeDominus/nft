@@ -3,6 +3,7 @@ const { auth } = require('../middleware/auth')
 
 //controllers
 const SetupCont = require('../controller/api/setupController')
+const InstallCont = require('../controller/api/installController')
 
 
 module.exports = (app) => {
@@ -13,4 +14,5 @@ module.exports = (app) => {
     })
 
     api.post('/setup/create-setup', SetupCont.createNFTStructure)
+    api.post('/install/install-setup', InstallCont.installSetup)
 }
