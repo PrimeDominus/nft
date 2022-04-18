@@ -37,7 +37,8 @@ exports.createNFTStructure = async (req, res) => {
     }
 
     // create directories
-    var mainDir = appRoot + "/nfts/" + req.body.project_name + "_" + new Date().getTime();
+    var project_name = req.body.project_name.replace(/ /g,"") + "_" + new Date().getTime();
+    var mainDir = appRoot + "/nfts/" + project_name;
     var contractsDir = mainDir + "/" + "contracts";
     var imagesDir = mainDir + "/" + "images";
     var metadataDir = mainDir + "/" + "metadata";
@@ -175,7 +176,7 @@ exports.createNFTStructure = async (req, res) => {
     try {
         let samplePackageJsonFile = require(appRoot + "/sample_files/package.json");
 
-        samplePackageJsonFile.name = req.body.project_name;
+        samplePackageJsonFile.name = req.body.project_name.replace(/ /g,"-");
         samplePackageJsonFile.description = req.body.project_description ? req.body.project_description : "NFT Creation";
         samplePackageJsonFile.author = req.body.author ? req.body.author : "";
         
@@ -212,6 +213,8 @@ exports.createNFTStructure = async (req, res) => {
         return false;
     }
 
-    success(res, 'Success', "project directory created");
+    var project_id = project_name.replace(/ /g,"");
+
+    success(res, 'Success', {msg : "project directory created", project_id : project_id});
 
 }
