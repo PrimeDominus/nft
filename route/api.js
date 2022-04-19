@@ -4,7 +4,8 @@ const { auth } = require('../middleware/auth')
 //controllers
 const SetupCont = require('../controller/api/setupController')
 const InstallCont = require('../controller/api/installController')
-const MetaDataCont = require('../controller/api/metaData')
+const MetaDataCont = require('../controller/api/metaDataController')
+const IpfsCont = require('../controller/api/ipfsController')
 
 
 module.exports = (app) => {
@@ -17,4 +18,7 @@ module.exports = (app) => {
     api.post('/setup/create-setup', SetupCont.createNFTStructure)
     api.post('/install/install-setup', InstallCont.installSetup)
     api.post('/metadata/upload-image', MetaDataCont.uploadMetaImages)
+    api.post('/ipfs/create-car-image', IpfsCont.createIpfsCarImage)
+    api.post('/metadata/upload-json', MetaDataCont.uploadMetaJsonFiles)
+    api.post('/ipfs/create-car-meta', IpfsCont.createIpfsCarMeta)
 }

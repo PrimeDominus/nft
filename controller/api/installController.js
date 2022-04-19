@@ -32,6 +32,7 @@ exports.installSetup = async (req, res) => {
             error422(res,"Cannot check project dir", err1)
             return false
         }
+        
         result = stdout1.split('\n')
         var dir = result.includes(project_id);
         if (dir) {
@@ -42,6 +43,7 @@ exports.installSetup = async (req, res) => {
                     error422(res,"Cannot install node module", err2)
                     return false
                 }
+                
                 success(res, "Installation successfully", true);
             });
         } else {
