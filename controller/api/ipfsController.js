@@ -2,9 +2,17 @@ const express = require('express');
 const router = express.Router();
 const config = require('../../config/index')
 const { success, error422, error501 } = require('../../function/response');
+const { fileFromPath, storeNFT } = require('../../function/common');
 const { Validator } = require('node-input-validator');
-// const { create } = 'ipfs-http-client';
-// const ipfs = create()
+// const ipfsClient = require('ipfs-http-client');
+// const ipfs = ipfsClient.create({
+//     host: 'localhost',
+//     port: config.PORT || 8080,
+//     protocol: 'http',
+//     headers: {
+//         authorization: 'Bearer ' + config.IPFS_TOKEN
+//     }
+// });
 const fs = require('fs');
 const appRoot = require('app-root-path');
 const { spawn, execSync, exec } = require('child_process');
@@ -134,5 +142,38 @@ exports.createIpfsCarMeta = async (req, res) => {
         console.log(e)
         error501(res)
         return false
+    }
+}
+
+
+/**
+ * @description upload car files to ipfs file storage for nft metadata.
+ * @param {String} project_id pass the project id 
+*/
+exports.uploadCarFiletoIpfs = async (req, res) => {
+    const v = new Validator(req.body, {
+        project_id: "required"
+    });
+
+    const match = await v.check();
+    if (!match) {
+        error422(res, "Validation error", v.errors)
+        return false;
+    }
+
+
+    var projectPath = appRoot + "/nfts/" + req.body.project_id
+    // var fileImage = fs.readFileSync(projectPath + "/images.car");
+    // var imageBuffer = new Buffer.from(fileImage);
+    // const imagePath = await fileFromPath(projectPath + "/images.car")
+    try {
+        const result = await storeNFT(projectPath + "/images.car", req.body.project_id, "")
+        // console.log(result)
+
+        success(res, "Your files stored in NFT storage", result)
+    } catch (e) {
+        console.log(e);
+        error501(res);
+        return false;
     }
 }

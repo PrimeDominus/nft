@@ -21,4 +21,5 @@ module.exports = (app) => {
     api.post('/ipfs/create-car-image', IpfsCont.createIpfsCarImage)
     api.post('/metadata/upload-json', MetaDataCont.uploadMetaJsonFiles)
     api.post('/ipfs/create-car-meta', IpfsCont.createIpfsCarMeta)
+    api.post('/ipfs/upload-file-to-ipfs', IpfsCont.uploadCarFiletoIpfs)
 }
