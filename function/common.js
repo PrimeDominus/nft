@@ -31,19 +31,13 @@ const fileFromPath = async (filePath) => {
 
 
 /**
-  * Reads an image file from `imagePath` and stores an NFT with the given name and description.
-  * @param {string} imagePath the path to an image file
-  * @param {string} name a name for the NFT
-  * @param {string} description a text description for the NFT
+  * Reads an image file from `filePath` and stores an NFT with the given name and description.
+  * @param {string} filePath the path to an car file
 */
-const storeNFT = async (imagePath, name, description) => {
-    const image = await fileFromPath(imagePath)
-    const nftstorage = new NFTStorage({ token: config.IPFS_TOKEN })    
-    return nftstorage.store({
-        image,
-        name,
-        description,
-    })
+const storeNFT = async (filePath) => {
+    const file = await fileFromPath(filePath)
+    const nftstorage = new NFTStorage({ token: config.IPFS_TOKEN })
+    return await nftstorage.storeCar(file)
 }
 
 module.exports = {

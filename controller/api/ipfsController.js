@@ -163,14 +163,15 @@ exports.uploadCarFiletoIpfs = async (req, res) => {
 
 
     var projectPath = appRoot + "/nfts/" + req.body.project_id
-    // var fileImage = fs.readFileSync(projectPath + "/images.car");
-    // var imageBuffer = new Buffer.from(fileImage);
-    // const imagePath = await fileFromPath(projectPath + "/images.car")
     try {
-        const result = await storeNFT(projectPath + "/images.car", req.body.project_id, "")
+        const resultImage = await storeNFT(projectPath + "/images.car")
+        const resultMeta = await storeNFT(projectPath + "/metadata.car")
         // console.log(result)
 
-        success(res, "Your files stored in NFT storage", result)
+        success(res, "Your files stored in NFT storage, Now you are ready to deploy your NFT token. ", {
+            imageCar : resultImage,
+            metaCar : resultMeta,
+        })
     } catch (e) {
         console.log(e);
         error501(res);
