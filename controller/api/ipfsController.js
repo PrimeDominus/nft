@@ -164,14 +164,32 @@ exports.uploadCarFiletoIpfs = async (req, res) => {
 
     var projectPath = appRoot + "/nfts/" + req.body.project_id
     try {
-        const resultImage = await storeNFT(projectPath + "/images.car")
-        const resultMeta = await storeNFT(projectPath + "/metadata.car")
-        // console.log(result)
+        exec('ls nfts', async (err1, stdout1, stderr1) => {
+            if (err1) {
+                console.log(err1);
+                error422(res, "Cannot check project dir", err1)
+                return false
+            }
+            result = stdout1.split('\n')
+            var dir = result.includes(req.body.project_id);
+            if (dir) {
+                const resultImage = await storeNFT(projectPath + "/images.car")
+                const resultMeta = await storeNFT(projectPath + "/metadata.car")
+                // console.log(result)
 
-        success(res, "Your files stored in NFT storage, Now you are ready to deploy your NFT token. ", {
-            imageCar : resultImage,
-            metaCar : resultMeta,
-        })
+                success(res, "Your files stored in NFT storage, Now you are ready to deploy your NFT token. ", {
+                    imageCar: resultImage,
+                    metaCar: resultMeta,
+                })
+
+            } else {
+                console.log("directory not found");
+                error422(res, 'Project setup not found', false);
+            }
+
+
+        });
+
     } catch (e) {
         console.log(e);
         error501(res);

@@ -6,6 +6,7 @@ const SetupCont = require('../controller/api/setupController')
 const InstallCont = require('../controller/api/installController')
 const MetaDataCont = require('../controller/api/metaDataController')
 const IpfsCont = require('../controller/api/ipfsController')
+const DeployCont = require('../controller/api/deployController')
 
 
 module.exports = (app) => {
@@ -22,4 +23,5 @@ module.exports = (app) => {
     api.post('/metadata/upload-json', MetaDataCont.uploadMetaJsonFiles)
     api.post('/ipfs/create-car-meta', IpfsCont.createIpfsCarMeta)
     api.post('/ipfs/upload-file-to-ipfs', IpfsCont.uploadCarFiletoIpfs)
+    api.post('/deploy/deploy-nft', DeployCont.deployNFT)
 }

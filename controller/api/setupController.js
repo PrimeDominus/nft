@@ -200,7 +200,7 @@ exports.createNFTStructure = async (req, res) => {
         samplePackageJsonFile["devDependencies"]["hardhat"] = "^" + hardhatVersion.version
 
         let nodeFetchVersion = await getLTSVersion("node-fetch")
-        samplePackageJsonFile["devDependencies"]["node-fetch"] = "^" + nodeFetchVersion.version
+        samplePackageJsonFile["devDependencies"]["node-fetch"] = "^2.6.7" //+ nodeFetchVersion.version
 
         // console.log(samplePackageJsonFile);
         let packageJsonFile = mainDir + "/package.json";
