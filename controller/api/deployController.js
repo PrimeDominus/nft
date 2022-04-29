@@ -63,10 +63,12 @@ exports.deployNFT = async (req, res) => {
 
                             var result = data.replace("{{{NFT_CONTRACT_ADDRESS}}}", result1);
                             // let envFile = mainDir + "/.env"
-                            fs.writeFile(projectEnv, result, 'utf8', function (err) {
+                            fs.writeFile(projectEnv, result, 'utf8', async function (err) {
                                 if (err) return console.log(err);
                                 console.log("NFT_CONTRACT_ADDRESS set to env file.");
 
+                                let setEnvCommand = "cd " + appRoot + "/nfts/" + req.body.project_id + " ; . .env";
+                                await exec(setEnvCommand, async (err4, stdout4, stderr4) => {});
 
                                 let setBaseUrlCommand = "cd " + appRoot + "/nfts/" + req.body.project_id + " ; npx hardhat set-base-token-uri --base-url 'https://" + req.body.meta_cid.trim() + ".ipfs.dweb.link/metadata/'";
                                 exec(setBaseUrlCommand, async (err4, stdout4, stderr4) => {
