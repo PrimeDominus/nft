@@ -93,7 +93,7 @@ exports.deployNFT = async (req, res) => {
                                             await exec(mintCommand, async (err5, stdout5, stderr5) => {
                                                 if (err5) {
                                                     console.log(err5);
-                                                    error422(res, "Cannot mint NFT token", err5)
+                                                    // error422(res, "Cannot mint NFT token", err5)
                                                     return false
                                                 }
                                                 console.log("mint : ", stdout5)
