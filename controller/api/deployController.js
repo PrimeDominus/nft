@@ -70,13 +70,15 @@ exports.deployNFT = async (req, res) => {
                                 let setEnvCommand = "cd " + appRoot + "/nfts/" + req.body.project_id + " ; . .env";
                                 await exec(setEnvCommand, async (err4, stdout4, stderr4) => {});
 
-                                let setBaseUrlCommand = "cd " + appRoot + "/nfts/" + req.body.project_id + " ; npx hardhat set-base-token-uri --base-url 'https://" + req.body.meta_cid.trim() + ".ipfs.dweb.link/metadata/'";
+                                let setBaseUrlCommand = "cd " + appRoot + "/nfts/" + req.body.project_id + " ; npx hardhat set-base-token-uri --base-url 'https://" + req.body.meta_cid.trim() + ".ipfs.dweb.link/metadata/' --contract-address " + result1;
                                 exec(setBaseUrlCommand, async (err4, stdout4, stderr4) => {
                                     if (err4) {
                                         console.log(err4);
                                         error422(res, "Cannot set baseurl your project", err4)
                                         return false
                                     }
+
+                                    console.log("set base url : "  ,stdout4);
 
                                     await fs.readdir(appRoot + "/nfts/" + req.body.project_id + "/metadata/", async (er, files) => {
                                         if (er) {
@@ -89,7 +91,7 @@ exports.deployNFT = async (req, res) => {
                                         for (let i of files) {
 
 
-                                            let mintCommand = "cd " + appRoot + "/nfts/" + req.body.project_id + " ; npx hardhat mint --address " + req.body.account_address.trim();
+                                            let mintCommand = "cd " + appRoot + "/nfts/" + req.body.project_id + " ; npx hardhat mint --address " + req.body.account_address.trim() + " --contract-address " + result1;
                                             await exec(mintCommand, async (err5, stdout5, stderr5) => {
                                                 if (err5) {
                                                     console.log(err5);

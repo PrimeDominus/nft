@@ -48,7 +48,8 @@ exports.createIpfsCarImage = async (req, res) => {
             var dir = result.includes(req.body.project_id);
             if (dir) {
 
-                let createImageCarCommand = "npx ipfs-car --pack " + projectImagePath + " --output " + projectPath + "/images.car";
+                // let createImageCarCommand = "npx ipfs-car --pack " + projectImagePath + " --output " + projectPath + "/images.car";
+                let createImageCarCommand = "ipfs-car --pack " + projectImagePath + " --output " + projectPath + "/images.car";
 
                 exec(createImageCarCommand, (err2, stdout2, stderr2) => {
                     if (err2) {
@@ -118,7 +119,8 @@ exports.createIpfsCarMeta = async (req, res) => {
             var dir = result.includes(req.body.project_id);
             if (dir) {
 
-                let createImageCarCommand = "npx ipfs-car --pack " + projectMetaPath + " --output " + projectPath + "/metadata.car";
+                // let createImageCarCommand = "npx ipfs-car --pack " + projectMetaPath + " --output " + projectPath + "/metadata.car";
+                let createImageCarCommand = "ipfs-car --pack " + projectMetaPath + " --output " + projectPath + "/metadata.car";
 
                 exec(createImageCarCommand, (err2, stdout2, stderr2) => {
                     if (err2) {

@@ -17,7 +17,6 @@ const packageJson = require('package-json');
  * @param {String} alchemy_key pass alchemy key here
  * @param {String} account_private_key pass crypto account private key here
  * @param {String} etherscan_api_key pass etherscan api key here
- * @param {Number} mint_price pass mint price here
  */
 exports.createNFTStructure = async (req, res) => {
 
@@ -27,7 +26,7 @@ exports.createNFTStructure = async (req, res) => {
         alchemy_key : "required",
         account_private_key : "required",
         etherscan_api_key : "required",
-        mint_price : "required",
+        // mint_price : "required",
     });
 
     const match = await v.check();
@@ -109,7 +108,8 @@ exports.createNFTStructure = async (req, res) => {
                 return console.log(err);
             }
 
-            var result = data.replace("{{{NAME}}}" , req.body.project_name).replace("{{{MINT_PRICE}}}" , req.body.mint_price)
+            var result = data.replace("{{{NAME}}}" , req.body.project_name)
+            //.replace("{{{MINT_PRICE}}}" , req.body.mint_price)
             // console.log(result)
 
             let solFile = mainDir + "/contracts/NFT.sol"
