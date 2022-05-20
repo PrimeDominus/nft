@@ -5,8 +5,7 @@ const config = require('./../../../config');
 import { Validator } from 'node-input-validator';
 import fs from "fs";
 const appRoot = require('app-root-path');
-import packageJson from 'package-json';
-import { getLTSVersion } from './../../functions/common';
+import { getLTSVersion, fileFromPath } from './../../functions/common';
 
 
 

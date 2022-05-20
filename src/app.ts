@@ -1,4 +1,6 @@
 import express, { Application, Request, Response, NextFunction } from "express";
+import { error401 } from './functions/response';
+import bcrypt from "bcryptjs";
 import cors from "cors";
 const config = require('../config.json');
 import { apiAuth } from "./middleware/auth";
@@ -20,13 +22,13 @@ const DBConnection = async () => {
     DI.orm = await MikroORM.init();
     DI.em = DI.orm.em;
     DI.ProjectInfoRepository = DI.orm.em.getRepository(ProjectInfo);
-    
+
     //migration
     // const migrator = DI.orm.getMigrator();
     // await migrator.createMigration();
     // await migrator.up()
     // await DI.orm.close(true);
-    
+
     if (config.DB_SYNC) {
         await DI.orm.getMigrator().up;
         const generator = DI.orm.getSchemaGenerator();
@@ -43,8 +45,8 @@ const port: number = config?.PORT ? config.PORT : 3000;
 // console.log(apiAuth());
 
 // Body Parser Middliware
+app.use(apiAuth);
 app.use((req, res, next) => RequestContext.create(DI.orm.em, next));
-// app.use(apiAuth());
 app.use(cors());
 app.use(express.urlencoded({ limit: "5mb", extended: true, parameterLimit: 50000 }));
 app.use(express.json());
