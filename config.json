@@ -1,0 +1,8 @@
+{
+    "DB_SYNC" : false,
+    "PORT" : 3000,
+    "API_SECRET_KEY" : "HkPH1jqGxGTI-SpzQ6PFf+2SlCgoaGYc7345#@32",
+    "SALT" : 10,
+    "POSTGRES_URL_OLD" : "postgres://fwdxmkbu:kTRtl4wvGfv6LoYEIMghXf9oHuA6FloR@chunee.db.elephantsql.com/fwdxmkbu",
+    "POSTGRES_URL" : "postgres://root:root@localhost:5432/fwdxmkbu"
+}
