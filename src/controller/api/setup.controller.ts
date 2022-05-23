@@ -20,6 +20,7 @@ export class SETUP {
      * @param {String} alchemy_key pass alchemy key here
      * @param {String} account_private_key pass crypto account private key here
      * @param {String} etherscan_api_key pass etherscan api key here
+     * @param {String} account_address pass your account address here
      */
     static async makeProjectSetup(req: Request, res: Response) {
         // validation
@@ -29,6 +30,7 @@ export class SETUP {
             account_private_key: "required",
             etherscan_api_key: "required",
             // mint_price : "required",
+            account_address : "required"
         });
 
         const match:any = await v.check();
@@ -219,7 +221,8 @@ export class SETUP {
 
         try {
             var data:any = {
-                project_id: project_id
+                project_id: project_id,
+                account_address : req.body.account_address
             }
             const project = DI.ProjectInfoRepository.create(data);
             await DI.ProjectInfoRepository.persist(project).flush();

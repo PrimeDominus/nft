@@ -49,7 +49,7 @@ app.use(apiAuth);
 app.use((req, res, next) => RequestContext.create(DI.orm.em, next));
 app.use(cors());
 app.use(express.urlencoded({ limit: "5mb", extended: true, parameterLimit: 50000 }));
-app.use(express.json());
+app.use(express.json({limit: '2mb'}));
 
 const apiRoute = require('./route/api');
 apiRoute(app)

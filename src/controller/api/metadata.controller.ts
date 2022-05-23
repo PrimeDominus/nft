@@ -82,7 +82,6 @@ export class METADATA {
     /**
      * @description upload json files for metadata for your nft token
      * @param {String} project_id pass the project id . you will get the project id from setup api.
-     * @param {String} image_cid pass image CID , you will get the CID from /ipfs/create-car-image in this route
      * @param {Array} meta_objects pass the entire meta object                                                    * @example : [
         *  {
                 "description" : "Friendly OpenSea Creature that enjoys long swims in the ocean.",
@@ -101,7 +100,7 @@ export class METADATA {
     static async uploadMetaJsonFiles(req: Request, res: Response) {
         const v:any = new Validator(req.body, {
             project_id: "required",
-            image_cid: "required",
+            // image_cid: "required",
             meta_objects: "required|array"
         });
 
@@ -110,6 +109,16 @@ export class METADATA {
             error422(res, "Validation error", v.errors)
             return false;
         }
+
+        try {
+            const projectInfo:any = await DI.ProjectInfoRepository.findOne({project_id: req.body.project_id});
+            req.body.image_cid = projectInfo.image_cid
+        } catch (e) {
+            console.log(e)
+            error501(res);
+            return false;
+        }
+        
 
         try {
             exec('ls nfts', (err1:any, stdout1:any, stderr1:any) => {
